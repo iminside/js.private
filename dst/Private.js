@@ -19,18 +19,14 @@ var Private = (function () {
     _classCallCheck(this, Private);
 
     this.props = props;
-    this.owners = [];
-    this.values = [];
+    this.key = Math.random().toString(36).replace(/^.{2}/, "_private_");
     this.get = this.get.bind(this);
-    this.get.destroy = this.destroy.bind(this);
   }
 
   _createClass(Private, [{
     key: "get",
     value: function get(context) {
-      var key = this.owners.indexOf(context);
-      if (key < 0) key = this.set(context);
-      return this.values[key];
+      return context[this.key] || this.set(context);
     }
   }, {
     key: "set",
@@ -38,14 +34,7 @@ var Private = (function () {
       var clone = (0, _jsClone2["default"])(this.props);
       for (var attr in clone) {
         if (clone.hasOwnProperty(attr) && clone[attr] instanceof Function) clone[attr] = clone[attr].bind(context);
-      }this.owners.push(context);
-      return this.values.push(clone) - 1;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy(context) {
-      var key = this.owners.indexOf(context);
-      return delete this.owners[key] && delete this.values[key];
+      }return context[this.key] = clone;
     }
   }]);
 
