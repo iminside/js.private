@@ -22,11 +22,6 @@ class People {
 		return $( this ).generateInfo();  // call private method
 	}
 
-	remove(){
-		$.destroy( this );                // destroy private props to free memory
-		console.log( "i removed" );
-	}
-
 }
 
 let $ = Private({
@@ -45,6 +40,5 @@ man.gender        // > "man"
 man.firstname     // > undefined
 man.lastname      // > undefined
 man.generateInfo  // > undefined
-man.remove()      // > "I removed"
 ```
 
