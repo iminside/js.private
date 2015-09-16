@@ -6,7 +6,6 @@ class Private {
   constructor( props ){
     this.props = props;
     this.key   = `_${ Math.random().toString( 36 ).substr( 2, 7 ) }_`;
-    this.get   = this.get.bind( this );
   }
 
   get( context ){
@@ -31,5 +30,8 @@ class Private {
 
 
 export default function( props ){
-  return ( new Private( props ) ).get;
+  let instance = new Private( props );
+  return function( context ){
+    return instance.get( context );
+  };
 }

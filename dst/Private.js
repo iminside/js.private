@@ -20,7 +20,6 @@ var Private = (function () {
 
     this.props = props;
     this.key = "_" + Math.random().toString(36).substr(2, 7) + "_";
-    this.get = this.get.bind(this);
   }
 
   _createClass(Private, [{
@@ -49,7 +48,10 @@ var Private = (function () {
 })();
 
 exports["default"] = function (props) {
-  return new Private(props).get;
+  var instance = new Private(props);
+  return function (context) {
+    return instance.get(context);
+  };
 };
 
 module.exports = exports["default"];
