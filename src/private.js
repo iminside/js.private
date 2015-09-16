@@ -5,7 +5,7 @@ class Private {
 
   constructor( props ){
     this.props = props;
-    this.key   = Math.random().toString( 36 ).replace( /^.{2}/, "_private_" );
+    this.key   = `_${ Math.random().toString( 36 ).substr( 2, 7 ) }_`;
     this.get   = this.get.bind( this );
   }
 
@@ -17,8 +17,14 @@ class Private {
     let clone = Clone( this.props );
     for( let attr in clone )
       if( clone.hasOwnProperty( attr ) && clone[ attr ] instanceof Function )
-        clone[ attr ] = clone[ attr ].bind( context );
+        clone[ attr ] = this.bind( clone[ attr ], context );
     return context[ this.key ] = clone;
+  }
+
+  bind( method, context ){
+    return function(){
+      method.apply( context, arguments );
+    };
   }
 
 }

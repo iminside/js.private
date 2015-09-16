@@ -19,7 +19,7 @@ var Private = (function () {
     _classCallCheck(this, Private);
 
     this.props = props;
-    this.key = Math.random().toString(36).replace(/^.{2}/, "_private_");
+    this.key = "_" + Math.random().toString(36).substr(2, 7) + "_";
     this.get = this.get.bind(this);
   }
 
@@ -33,8 +33,15 @@ var Private = (function () {
     value: function set(context) {
       var clone = (0, _jsClone2["default"])(this.props);
       for (var attr in clone) {
-        if (clone.hasOwnProperty(attr) && clone[attr] instanceof Function) clone[attr] = clone[attr].bind(context);
+        if (clone.hasOwnProperty(attr) && clone[attr] instanceof Function) clone[attr] = this.bind(clone[attr], context);
       }return context[this.key] = clone;
+    }
+  }, {
+    key: "bind",
+    value: function bind(method, context) {
+      return function () {
+        method.apply(context, arguments);
+      };
     }
   }]);
 
