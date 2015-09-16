@@ -1,6 +1,6 @@
 {
   "name": "js.private",
-  "version": "0.0.5",
+  "version": "0.0.9",
   "description": "Private properties for objects",
   "main": "./dst/Private.js",
   "scripts": {

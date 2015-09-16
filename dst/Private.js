@@ -40,7 +40,7 @@ var Private = (function () {
     key: "bind",
     value: function bind(method, context) {
       return function () {
-        method.apply(context, arguments);
+        return method.apply(context, arguments);
       };
     }
   }]);

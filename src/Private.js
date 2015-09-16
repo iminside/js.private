@@ -23,7 +23,7 @@ class Private {
 
   bind( method, context ){
     return function(){
-      method.apply( context, arguments );
+      return method.apply( context, arguments );
     };
   }
 
