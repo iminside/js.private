@@ -4,26 +4,34 @@ import Clone from "js.clone";
 class Private {
 
   constructor( props ){
-    this.props = props;
-    this.key   = `_${ Math.random().toString( 36 ).substr( 2, 7 ) }_`;
+    this._key_   = `_${ Math.random().toString( 36 ).substr( 2, 7 ) }_`;
+    this._props_ = this.prepare( props );
+  }
+
+  prepare( props ){
+    for( let attr in props )
+      if( props.hasOwnProperty( attr ) && typeof props[ attr ] === `function` )
+        props[ attr ] = this.bind( this._key_, props[ attr ] );
+    return props;
+  }
+
+  bind( key, method ){
+    return function(){
+      return method.apply( this[ key ], arguments );
+    };
   }
 
   get( context ){
-    return context[ this.key ] || this.set( context );
+    return context[ this._key_ ] || this.set( context );
   }
 
   set( context ){
-    let clone = Clone( this.props );
-    for( let attr in clone )
-      if( clone.hasOwnProperty( attr ) && clone[ attr ] instanceof Function )
-        clone[ attr ] = this.bind( clone[ attr ], context );
-    return context[ this.key ] = clone;
-  }
-
-  bind( method, context ){
-    return function(){
-      return method.apply( context, arguments );
-    };
+    let props = Object.create( this._props_ )
+    for( let attr in this._props_ )
+      if( this._props_.hasOwnProperty( attr ) && typeof this._props_[ attr ] === `object` )
+        props[ attr ] = Clone( this._props_[ attr ] );
+    props[ this._key_ ] = context;
+    return context[ this._key_ ] = props;
   }
 
 }
