@@ -8,6 +8,8 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _jsClone = require("js.clone");
@@ -44,11 +46,19 @@ var Private = (function () {
   }, {
     key: "set",
     value: function set(context) {
-      var props = Object.create(this._props_);
+      var props = Object.create(this._props_, this.descriptor(this._key_, context));
       for (var attr in this._props_) {
         if (this._props_.hasOwnProperty(attr) && typeof this._props_[attr] === "object") props[attr] = (0, _jsClone2["default"])(this._props_[attr]);
-      }props[this._key_] = context;
-      return context[this._key_] = props;
+      }return Object.defineProperties(context, this.descriptor(this._key_, props))[this._key_];
+    }
+  }, {
+    key: "descriptor",
+    value: function descriptor(name, value) {
+      var configurable = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+      var writable = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+      var enumerable = arguments.length <= 4 || arguments[4] === undefined ? false : arguments[4];
+
+      return _defineProperty({}, name, { value: value, configurable: configurable, writable: writable, enumerable: enumerable });
     }
   }]);
 
