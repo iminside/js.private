@@ -26,12 +26,15 @@ class Private {
   }
 
   set( context ){
-    let props = Object.create( this._props_ )
+    let props = Object.create( this._props_, this.descriptor( this._key_, context ) );
     for( let attr in this._props_ )
       if( this._props_.hasOwnProperty( attr ) && typeof this._props_[ attr ] === `object` )
         props[ attr ] = Clone( this._props_[ attr ] );
-    props[ this._key_ ] = context;
-    return context[ this._key_ ] = props;
+    return Object.defineProperties( context, this.descriptor( this._key_, props ) )[ this._key_ ];
+  }
+
+  descriptor( name, value, configurable = false, writable = false, enumerable = false ){
+    return { [ name ]: { value, configurable, writable, enumerable } };
   }
 
 }
