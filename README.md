@@ -24,18 +24,19 @@ class People {
 
 }
 
-let $ = Private({
+const $ = Private({
 	firstname: "DefaultFirstName",
 	lastname:  "DefaultLastName",
+    age:       28,
 	generateInfo: function(){
-		return $( this ).firstname + " " + $( this ).lastname + " (" + this.gender + ")";
+		return `${ $( this ).firstname } ${ $( this ).lastname } (${ this.gender }, ${ $( this ).age })`;
 	}
 });
 
 
 let man = new People( "Denis", "Churbanov", "man" );
 
-man.info          // > "Denis Churbanov (man)"
+man.info          // > "Denis Churbanov (man, 28)"
 man.gender        // > "man"
 man.firstname     // > undefined
 man.lastname      // > undefined
