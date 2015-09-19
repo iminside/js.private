@@ -1,6 +1,6 @@
 {
   "name": "js.private",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Private properties for objects",
   "main": "./dst/Private.js",
   "scripts": {
@@ -17,11 +17,5 @@
   },
   "dependencies": {
     "js.clone": ">0.0.1"
-  },
-  "readme": "### Install\r\n\r\n```\r\nnpm install js.private --save\r\n```\r\n\r\n### Usage\r\n\r\n```javascript\r\n\r\nimport Private from \"js.private\";\r\n\r\nclass People {\r\n\r\n\tconstructor( firstname, lastname, gender ){\r\n\t\t$( this ).firstname = firstname;  // private property\r\n\t\t$( this ).lastname  = lastname;   // private property\r\n\t\tthis.gender         = gender;     // public  property\r\n\t}\r\n\r\n\tget info(){\r\n\t\treturn $( this ).generateInfo();  // call private method\r\n\t}\r\n\r\n}\r\n\r\nlet $ = Private({\r\n\tfirstname: \"DefaultFirstName\",\r\n\tlastname:  \"DefaultLastName\",\r\n\tgenerateInfo: function(){\r\n\t\treturn $( this ).firstname + \" \" + $( this ).lastname + \" (\" + this.gender + \")\";\r\n\t}\r\n});\r\n\r\n\r\nlet man = new People( \"Denis\", \"Churbanov\", \"man\" );\r\n\r\nman.info          // > \"Denis Churbanov (man)\"\r\nman.gender        // > \"man\"\r\nman.firstname     // > undefined\r\nman.lastname      // > undefined\r\nman.generateInfo  // > undefined\r\n```\r\n\r\n",
-  "readmeFilename": "README.md",
-  "gitHead": "51b92f56d4a5c68ba3f77ef732381c20c3c927b7",
-  "_id": "js.private@0.2.0",
-  "_shasum": "eeb514909a532b1a1f77c2d86bd6717ca9f0d5d0",
-  "_from": "js.private@>0.0.3"
+  }
 }
