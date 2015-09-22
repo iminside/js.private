@@ -1,8 +1,12 @@
 {
   "name": "js.private",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Private properties for objects",
   "main": "./dst/Private.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/4urbanoff/js.private.git"
+  },
   "scripts": {
     "start": "gulp",
     "build": "gulp build"
